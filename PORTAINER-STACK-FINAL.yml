@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  alpha-motos-crm:
+    image: docker.io/gustacg/alpha-motos-crm:latest
+    networks:
+      - network_swarm_public
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      labels:
+        # Traefik configuration for Cloudflare
+        - traefik.enable=true
+        - traefik.http.routers.alpha-motos.rule=Host(`alphamotos.gustacg.com`)
+        - traefik.http.routers.alpha-motos.entrypoints=websecure
+        - traefik.http.routers.alpha-motos.tls=true
+        - traefik.http.routers.alpha-motos.service=alpha-motos
+        - traefik.http.services.alpha-motos.loadbalancer.server.port=80
+        - traefik.http.services.alpha-motos.loadbalancer.passHostHeader=true
+        
+        # HTTP to HTTPS redirect
+        - traefik.http.routers.alpha-motos-http.rule=Host(`alphamotos.gustacg.com`)
+        - traefik.http.routers.alpha-motos-http.entrypoints=web
+        - traefik.http.routers.alpha-motos-http.middlewares=redirect-to-https
+        - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+        - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
+        
+        # Headers for Cloudflare
+        - traefik.http.routers.alpha-motos.middlewares=alpha-headers
+        - traefik.http.middlewares.alpha-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
+
+networks:
+  network_swarm_public:
+    external: true
+    name: network_swarm_public

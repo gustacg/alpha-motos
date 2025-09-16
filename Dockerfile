@@ -22,8 +22,8 @@ RUN test -f dist/index.html || (echo "ERROR: dist/index.html not found after bui
 # Production stage
 FROM nginx:alpine AS production
 
-# Copy custom nginx configuration (FIXED VERSION)
-COPY nginx-FIXED.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built files from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
@@ -39,7 +39,7 @@ EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
+  CMD curl -f http://localhost:80/health || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
