@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  alpha-motos-crm:
+    image: docker.io/gustacg/alpha-motos-crm:latest
+    networks:
+      - network_swarm_public
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 60s
+        rollback_config:
+          parallelism: 1
+          delay: 10s
+          monitor: 60s
+      labels:
+        # Traefik enable
+        - traefik.enable=true
+        
+        # Router configuration
+        - traefik.http.routers.alpha-motos.rule=Host(`alphamotos.gustacg.com`)
+        - traefik.http.routers.alpha-motos.entrypoints=websecure
+        
+        # TLS configuration - DISABLED for Cloudflare proxy
+        # - traefik.http.routers.alpha-motos.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.alpha-motos.tls=true
+        
+        # Service configuration
+        - traefik.http.routers.alpha-motos.service=alpha-motos
+        - traefik.http.services.alpha-motos.loadbalancer.server.port=80
+        - traefik.http.services.alpha-motos.loadbalancer.passHostHeader=true
+        
+        # Security headers middleware
+        - traefik.http.routers.alpha-motos.middlewares=alpha-motos-headers
+        - traefik.http.middlewares.alpha-motos-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
+        - traefik.http.middlewares.alpha-motos-headers.headers.customRequestHeaders.X-Real-IP=true
+        - traefik.http.middlewares.alpha-motos-headers.headers.customRequestHeaders.X-Forwarded-For=true
+        
+        # Response headers
+        - traefik.http.middlewares.alpha-motos-headers.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN
+        - traefik.http.middlewares.alpha-motos-headers.headers.customResponseHeaders.X-XSS-Protection=1; mode=block
+        - traefik.http.middlewares.alpha-motos-headers.headers.customResponseHeaders.X-Content-Type-Options=nosniff
+        
+        # HTTP to HTTPS redirect
+        - traefik.http.routers.alpha-motos-http.rule=Host(`alphamotos.gustacg.com`)
+        - traefik.http.routers.alpha-motos-http.entrypoints=web
+        - traefik.http.routers.alpha-motos-http.middlewares=redirect-to-https
+        - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+        - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
+
+networks:
+  network_swarm_public:
+    external: true
+    name: network_swarm_public
