@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Alpha Motos Dealership Management System Design Tokens
+   Clean, professional interface with red accent branding
+   All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Brand Colors */
+    --brand-red: 0 67% 56%; /* #DC2626 - Primary brand color */
+    --brand-red-light: 0 67% 66%; /* Lighter red for hover states */
+    --brand-red-dark: 0 67% 46%; /* Darker red for active states */
+    
+    /* Neutral Palette */
+    --background: 0 0% 98%; /* #FAFAFA - Light background */
+    --foreground: 220 14% 16%; /* #1F2937 - Primary text */
+    
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 220 14% 16%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 16%;
+    
+    /* Alpha Motos Brand Identity */
+    --primary: 0 67% 56%; /* Brand red */
+    --primary-foreground: 0 0% 100%; /* White text on red */
+    
+    --secondary: 220 14% 96%; /* Light gray */
+    --secondary-foreground: 220 14% 16%;
+    
+    --muted: 220 13% 95%; /* Very light gray */
+    --muted-foreground: 220 9% 42%; /* #6B7280 - Secondary text */
+    
+    --accent: 217 20% 95%; /* Subtle blue accent */
+    --accent-foreground: 220 14% 16%;
+    
+    /* Status Colors */
+    --success: 142 76% 36%; /* #10B981 - Success green */
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%; /* #F59E0B - Warning amber */
+    --warning-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%; /* #EF4444 - Error red */
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Interface Elements */
+    --border: 220 13% 91%; /* Light border */
+    --input: 220 13% 91%;
+    --ring: 0 67% 56%; /* Brand red focus ring */
+    
+    --radius: 0.75rem; /* Rounded corners */
+    
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-red)), hsl(var(--brand-red-light)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+    
+    /* Shadows */
+    --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-elevated: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-brand: 0 10px 25px -12px hsl(var(--brand-red) / 0.4);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-quick: all 0.15s ease-out;
+
+    /* Chart Colors */
+    --chart-1: 217 91% 60%; /* Blue */
+    --chart-2: 142 76% 36%; /* Green */
+    --chart-3: 38 92% 50%; /* Amber */
+    --chart-4: 0 84% 60%; /* Red */
+    --chart-5: 271 81% 56%; /* Purple */
+
+    /* Sidebar Variables */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 7% 6%; /* #0f0e0e para modo claro */
+    --sidebar-primary: 0 67% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 95%;
+    --sidebar-accent-foreground: 0 7% 6%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 0 67% 56%;
+}
+
+/* Previne overflow horizontal global */
+body, html {
+  overflow-x: hidden;
+}
+
+/* Container de página */
+.page-container {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* Kanban específico */
+.kanban-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.kanban-content {
+  display: flex;
+  gap: 1rem;
+  min-width: max-content;
+  padding-bottom: 1rem;
+}
+
+  .dark {
+    /* Dark Mode Colors */
+    --background: 220 14% 8%; /* Very dark background */
+    --foreground: 0 0% 95%; /* Light text */
+    
+    --card: 220 14% 10%; /* Dark cards */
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 220 14% 10%;
+    --popover-foreground: 0 0% 95%;
+    
+    /* Brand colors remain the same */
+    --primary: 0 67% 56%; /* Brand red */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 220 14% 18%; /* Dark gray */
+    --secondary-foreground: 0 0% 95%;
+    
+    --muted: 220 14% 15%; /* Darker gray */
+    --muted-foreground: 220 9% 65%; /* Light secondary text */
+    
+    --accent: 220 14% 18%;
+    --accent-foreground: 0 0% 95%;
+    
+    /* Status colors for dark mode */
+    --success: 142 76% 40%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Interface elements */
+    --border: 220 14% 18%;
+    --input: 220 14% 18%;
+    --ring: 0 67% 56%;
+
+    /* Chart Colors - Dark Mode */
+    --chart-1: 217 91% 65%; /* Lighter blue for dark mode */
+    --chart-2: 142 76% 41%; /* Lighter green for dark mode */
+    --chart-3: 38 92% 55%; /* Lighter amber for dark mode */
+    --chart-4: 0 84% 65%; /* Lighter red for dark mode */
+    --chart-5: 271 81% 61%; /* Lighter purple for dark mode */
+    
+    /* Dark sidebar */
+    --sidebar-background: 220 14% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 0 67% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 220 14% 15%;
+    --sidebar-ring: 0 67% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
