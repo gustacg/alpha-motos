@@ -119,21 +119,21 @@ export function LeadDetailsModal({ lead, isOpen, onClose }: LeadDetailsModalProp
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+      <DialogContent className="max-w-7xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-0">
+        <DialogHeader className="p-4 sm:p-6 pb-4">
+          <DialogTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex items-center gap-2 flex-wrap">
               <User className="h-5 w-5" />
-              {lead.nome}
-              <Badge variant="outline" className="ml-2">
+              <span className="text-base sm:text-lg font-semibold">{lead.nome}</span>
+              <Badge variant="outline" className="ml-0 sm:ml-2">
                 {statusLabels[lead.tipo]}
               </Badge>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="text-right">
+            <div className="flex items-center gap-3 justify-start sm:justify-end">
+              <div className="text-left sm:text-right">
                 <div className="text-sm text-muted-foreground">Score</div>
                 <div className="flex items-center gap-2">
-                  <div className="text-2xl font-bold text-primary">
+                  <div className="text-xl sm:text-2xl font-bold text-primary">
                     {lead.score}
                   </div>
                   <div className="text-sm text-muted-foreground">/ 100</div>
@@ -151,59 +151,72 @@ export function LeadDetailsModal({ lead, isOpen, onClose }: LeadDetailsModalProp
             <div className="text-lg text-muted-foreground">Carregando detalhes...</div>
           </div>
         ) : (
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="personal">Dados Pessoais</TabsTrigger>
-              <TabsTrigger value="interests">Histórico de Interesses</TabsTrigger>
-              <TabsTrigger value="financial">Histórico Financeiro</TabsTrigger>
-              <TabsTrigger value="processes">Histórico de Processos</TabsTrigger>
-            </TabsList>
+          <div className="px-4 sm:px-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-4">
+                <TabsTrigger value="personal" className="text-xs sm:text-sm">
+                  <span className="hidden sm:inline">Dados Pessoais</span>
+                  <span className="sm:hidden">Pessoais</span>
+                </TabsTrigger>
+                <TabsTrigger value="interests" className="text-xs sm:text-sm">
+                  <span className="hidden sm:inline">Histórico de Interesses</span>
+                  <span className="sm:hidden">Interesses</span>
+                </TabsTrigger>
+                <TabsTrigger value="financial" className="text-xs sm:text-sm">
+                  <span className="hidden sm:inline">Histórico Financeiro</span>
+                  <span className="sm:hidden">Financeiro</span>
+                </TabsTrigger>
+                <TabsTrigger value="processes" className="text-xs sm:text-sm">
+                  <span className="hidden sm:inline">Histórico de Processos</span>
+                  <span className="sm:hidden">Processos</span>
+                </TabsTrigger>
+              </TabsList>
 
-            {/* Seção 1: Dados Pessoais */}
+            {/* Seção 1: Dados Pessoais - Responsivo */}
             <TabsContent value="personal" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                     <User className="h-4 w-4" />
                     Dados Pessoais
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-3">
                       <div>
                         <Label className="text-sm font-medium">Tipo (Etapa Atual)</Label>
-                        <p className="text-sm">{statusLabels[lead.tipo]}</p>
+                        <p className="text-sm mt-1">{statusLabels[lead.tipo]}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Nome</Label>
-                        <p className="text-sm">{lead.nome}</p>
+                        <p className="text-sm mt-1 break-words">{lead.nome}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Vendedora</Label>
-                        <p className="text-sm">{lead.vendedora || 'Não definida'}</p>
+                        <p className="text-sm mt-1">{lead.vendedora || 'Não definida'}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">CPF</Label>
-                        <p className="text-sm">{lead.cpf || 'Não informado'}</p>
+                        <p className="text-sm mt-1">{lead.cpf || 'Não informado'}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Email</Label>
-                        <p className="text-sm">{lead.email || 'Não informado'}</p>
+                        <p className="text-sm mt-1 break-words">{lead.email || 'Não informado'}</p>
                       </div>
                     </div>
                     <div className="space-y-3">
                       <div>
                         <Label className="text-sm font-medium">Telefone</Label>
-                        <p className="text-sm">{lead.telefone}</p>
+                        <p className="text-sm mt-1">{lead.telefone}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Endereço</Label>
-                        <p className="text-sm">{lead.endereco || 'Não informado'}</p>
+                        <p className="text-sm mt-1 break-words">{lead.endereco || 'Não informado'}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Contato de Emergência</Label>
-                        <p className="text-sm">
+                        <p className="text-sm mt-1 break-words">
                           {lead.contato_emergencia_nome ? 
                             `${lead.contato_emergencia_nome} - ${lead.contato_emergencia_telefone || 'Sem telefone'}` : 
                             'Não informado'
@@ -243,6 +256,7 @@ export function LeadDetailsModal({ lead, isOpen, onClose }: LeadDetailsModalProp
               />
             </TabsContent>
           </Tabs>
+          </div>
         )}
       </DialogContent>
     </Dialog>
@@ -306,7 +320,7 @@ function HistoricoInteressesSection({
       <CardContent className="space-y-4">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="data_interesse">Data do Interesse</Label>
                 <Input
@@ -327,7 +341,7 @@ function HistoricoInteressesSection({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="cor_preferida">Cor Preferida</Label>
                 <Input
@@ -472,7 +486,7 @@ function HistoricoFinanceiroSection({
       <CardContent className="space-y-4">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="data_tentativa">Data da Tentativa</Label>
                 <Input
@@ -495,7 +509,7 @@ function HistoricoFinanceiroSection({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="numero_parcelas">Número de Parcelas</Label>
                 <Input
@@ -668,7 +682,7 @@ function HistoricoProcessosSection({
       <CardContent className="space-y-4">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="tipo_processo">Tipo de Processo</Label>
                 <Input
@@ -688,7 +702,7 @@ function HistoricoProcessosSection({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="local_comarca">Local/Comarca</Label>
                 <Input

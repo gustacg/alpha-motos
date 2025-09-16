@@ -120,12 +120,12 @@ export function EditLeadDialog({ lead, isOpen, onClose, onUpdateLead }: EditLead
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="max-w-2xl w-full max-h-[95vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Editar Lead - {lead.nome}</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl">Editar Lead - <span className="break-words">{lead.nome}</span></DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="nome">Nome *</Label>
               <Input
@@ -167,7 +167,7 @@ export function EditLeadDialog({ lead, isOpen, onClose, onUpdateLead }: EditLead
             </Select>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="email">Email</Label>
               <Input
@@ -199,7 +199,7 @@ export function EditLeadDialog({ lead, isOpen, onClose, onUpdateLead }: EditLead
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="contato_emergencia_nome">Contato de Emergência (Nome)</Label>
               <Input
@@ -227,11 +227,11 @@ export function EditLeadDialog({ lead, isOpen, onClose, onUpdateLead }: EditLead
             onChange={(score) => setFormData({ ...formData, score })}
           />
 
-          <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={handleClose}>
+          <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={handleClose} className="w-full sm:w-auto">
               Cancelar
             </Button>
-            <Button type="submit">
+            <Button type="submit" className="w-full sm:w-auto">
               Salvar Alterações
             </Button>
           </div>

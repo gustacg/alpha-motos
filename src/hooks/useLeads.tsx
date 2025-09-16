@@ -55,7 +55,9 @@ export function useLeads() {
         (filters.scoringRange === 'medium' && lead.score >= 60 && lead.score < 80) ||
         (filters.scoringRange === 'low' && lead.score < 60);
 
-      return matchesSearch && matchesScoring;
+      const matchesVendedora = !filters.vendedora || lead.vendedora === filters.vendedora;
+
+      return matchesSearch && matchesScoring && matchesVendedora;
     });
   }, [leads, filters]);
 

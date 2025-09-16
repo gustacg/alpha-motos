@@ -59,5 +59,6 @@ export interface LeadWithHistory extends Lead {
 export interface LeadFilters {
   search: string;
   scoringRange?: 'high' | 'medium' | 'low';
+  vendedora?: string;
   interestModel?: string;
 }
