@@ -74,12 +74,12 @@ export function AddLeadDialog({ onAddLead }: AddLeadDialogProps) {
           Adicionar Lead
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl w-full max-h-[95vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl">Adicionar Novo Lead</DialogTitle>
+          <DialogTitle>Adicionar Novo Lead</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="nome">Nome *</Label>
               <Input
@@ -121,7 +121,7 @@ export function AddLeadDialog({ onAddLead }: AddLeadDialogProps) {
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="email">Email</Label>
               <Input
@@ -153,7 +153,7 @@ export function AddLeadDialog({ onAddLead }: AddLeadDialogProps) {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="contato_emergencia_nome">Contato de Emergência (Nome)</Label>
               <Input
@@ -181,11 +181,11 @@ export function AddLeadDialog({ onAddLead }: AddLeadDialogProps) {
             onChange={(score) => setFormData({ ...formData, score })}
           />
 
-          <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)} className="w-full sm:w-auto">
+          <div className="flex justify-end gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancelar
             </Button>
-            <Button type="submit" className="w-full sm:w-auto">
+            <Button type="submit">
               Adicionar Lead
             </Button>
           </div>

@@ -19,14 +19,13 @@ interface KanbanColumnProps {
 
 const statusColors: Record<LeadStatus, string> = {
   lead: 'bg-blue-500/10 text-blue-700 dark:text-blue-300',
-  qualificado: 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-300',
   consultar: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300',
-  agendamento: 'bg-orange-500/10 text-orange-700 dark:text-orange-300',
-  nao_comparecimento: 'bg-pink-500/10 text-pink-700 dark:text-pink-300',
-  contrato: 'bg-purple-500/10 text-purple-700 dark:text-purple-300',
-  cliente: 'bg-green-500/10 text-green-700 dark:text-green-300',
+  qualificado: 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-300',
+  agendado: 'bg-orange-500/10 text-orange-700 dark:text-orange-300',
+  nao_compareceu: 'bg-pink-500/10 text-pink-700 dark:text-pink-300',
+  contrato_feito: 'bg-purple-500/10 text-purple-700 dark:text-purple-300',
+  venda_concluida: 'bg-green-500/10 text-green-700 dark:text-green-300',
   distrato: 'bg-red-500/10 text-red-700 dark:text-red-300',
-  curioso: 'bg-gray-500/10 text-gray-700 dark:text-gray-300',
   descartado: 'bg-slate-500/10 text-slate-700 dark:text-slate-300'
 };
 

@@ -22,14 +22,13 @@ interface LeadDetailsModalProps {
 
 const statusLabels = {
   lead: 'Lead',
-  qualificado: 'Qualificado',
   consultar: 'Consultar',
-  agendamento: 'Agendamento',
-  nao_comparecimento: 'Não Comparecimento',
-  contrato: 'Contrato',
-  cliente: 'Cliente',
+  qualificado: 'Qualificado',
+  agendado: 'Agendado',
+  nao_compareceu: 'Não Compareceu',
+  contrato_feito: 'Contrato feito',
+  venda_concluida: 'Venda concluída',
   distrato: 'Distrato',
-  curioso: 'Curioso',
   descartado: 'Descartado'
 };
 
@@ -119,21 +118,21 @@ export function LeadDetailsModal({ lead, isOpen, onClose }: LeadDetailsModalProp
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-0">
-        <DialogHeader className="p-4 sm:p-6 pb-4">
-          <DialogTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="flex items-center gap-2 flex-wrap">
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
               <User className="h-5 w-5" />
-              <span className="text-base sm:text-lg font-semibold">{lead.nome}</span>
-              <Badge variant="outline" className="ml-0 sm:ml-2">
+              {lead.nome}
+              <Badge variant="outline" className="ml-2">
                 {statusLabels[lead.tipo]}
               </Badge>
             </div>
-            <div className="flex items-center gap-3 justify-start sm:justify-end">
-              <div className="text-left sm:text-right">
+            <div className="flex items-center gap-3">
+              <div className="text-right">
                 <div className="text-sm text-muted-foreground">Score</div>
                 <div className="flex items-center gap-2">
-                  <div className="text-xl sm:text-2xl font-bold text-primary">
+                  <div className="text-2xl font-bold text-primary">
                     {lead.score}
                   </div>
                   <div className="text-sm text-muted-foreground">/ 100</div>
@@ -151,72 +150,59 @@ export function LeadDetailsModal({ lead, isOpen, onClose }: LeadDetailsModalProp
             <div className="text-lg text-muted-foreground">Carregando detalhes...</div>
           </div>
         ) : (
-          <div className="px-4 sm:px-6">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-4">
-                <TabsTrigger value="personal" className="text-xs sm:text-sm">
-                  <span className="hidden sm:inline">Dados Pessoais</span>
-                  <span className="sm:hidden">Pessoais</span>
-                </TabsTrigger>
-                <TabsTrigger value="interests" className="text-xs sm:text-sm">
-                  <span className="hidden sm:inline">Histórico de Interesses</span>
-                  <span className="sm:hidden">Interesses</span>
-                </TabsTrigger>
-                <TabsTrigger value="financial" className="text-xs sm:text-sm">
-                  <span className="hidden sm:inline">Histórico Financeiro</span>
-                  <span className="sm:hidden">Financeiro</span>
-                </TabsTrigger>
-                <TabsTrigger value="processes" className="text-xs sm:text-sm">
-                  <span className="hidden sm:inline">Histórico de Processos</span>
-                  <span className="sm:hidden">Processos</span>
-                </TabsTrigger>
-              </TabsList>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="personal">Dados Pessoais</TabsTrigger>
+              <TabsTrigger value="interests">Histórico de Interesses</TabsTrigger>
+              <TabsTrigger value="financial">Histórico Financeiro</TabsTrigger>
+              <TabsTrigger value="processes">Histórico de Processos</TabsTrigger>
+            </TabsList>
 
-            {/* Seção 1: Dados Pessoais - Responsivo */}
+            {/* Seção 1: Dados Pessoais */}
             <TabsContent value="personal" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <CardTitle className="flex items-center gap-2">
                     <User className="h-4 w-4" />
                     Dados Pessoais
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-3">
                       <div>
                         <Label className="text-sm font-medium">Tipo (Etapa Atual)</Label>
-                        <p className="text-sm mt-1">{statusLabels[lead.tipo]}</p>
+                        <p className="text-sm">{statusLabels[lead.tipo]}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Nome</Label>
-                        <p className="text-sm mt-1 break-words">{lead.nome}</p>
+                        <p className="text-sm">{lead.nome}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Vendedora</Label>
-                        <p className="text-sm mt-1">{lead.vendedora || 'Não definida'}</p>
+                        <p className="text-sm">{lead.vendedora || 'Não definida'}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">CPF</Label>
-                        <p className="text-sm mt-1">{lead.cpf || 'Não informado'}</p>
+                        <p className="text-sm">{lead.cpf || 'Não informado'}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Email</Label>
-                        <p className="text-sm mt-1 break-words">{lead.email || 'Não informado'}</p>
+                        <p className="text-sm">{lead.email || 'Não informado'}</p>
                       </div>
                     </div>
                     <div className="space-y-3">
                       <div>
                         <Label className="text-sm font-medium">Telefone</Label>
-                        <p className="text-sm mt-1">{lead.telefone}</p>
+                        <p className="text-sm">{lead.telefone}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Endereço</Label>
-                        <p className="text-sm mt-1 break-words">{lead.endereco || 'Não informado'}</p>
+                        <p className="text-sm">{lead.endereco || 'Não informado'}</p>
                       </div>
                       <div>
                         <Label className="text-sm font-medium">Contato de Emergência</Label>
-                        <p className="text-sm mt-1 break-words">
+                        <p className="text-sm">
                           {lead.contato_emergencia_nome ? 
                             `${lead.contato_emergencia_nome} - ${lead.contato_emergencia_telefone || 'Sem telefone'}` : 
                             'Não informado'
@@ -256,7 +242,6 @@ export function LeadDetailsModal({ lead, isOpen, onClose }: LeadDetailsModalProp
               />
             </TabsContent>
           </Tabs>
-          </div>
         )}
       </DialogContent>
     </Dialog>
@@ -276,7 +261,8 @@ function HistoricoInteressesSection({
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     data_interesse: new Date().toISOString().split('T')[0],
-    modelo_moto: '',
+    modelo: '',
+    ano: '',
     cor_preferida: '',
     valor_interesse: '',
     observacoes: ''
@@ -284,24 +270,37 @@ function HistoricoInteressesSection({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    let modelo_moto = undefined;
+    if (formData.modelo && formData.ano) modelo_moto = `${formData.modelo} ${formData.ano}`;
+    else if (formData.modelo) modelo_moto = formData.modelo;
+    else if (formData.ano) modelo_moto = formData.ano;
     onAdd({
       lead_id: leadId,
       data_interesse: formData.data_interesse,
-      modelo_moto: formData.modelo_moto || undefined,
+      modelo_moto,
       cor_preferida: formData.cor_preferida || undefined,
       valor_interesse: formData.valor_interesse ? parseFloat(formData.valor_interesse) : undefined,
       observacoes: formData.observacoes || undefined
     });
-    
     setFormData({
       data_interesse: new Date().toISOString().split('T')[0],
-      modelo_moto: '',
+      modelo: '',
+      ano: '',
       cor_preferida: '',
       valor_interesse: '',
       observacoes: ''
     });
     setShowForm(false);
   };
+
+  const MOTO_MODELOS = [
+    'CG 150 Titan', 'CG 125 Fan', 'CG 150 Fan', 'CG 150 Start', 'CG 160 Start', 'CG 160 Fan', 'CG 160 Titan',
+    'Tornado 250', 'NXR 150 Bros', 'NXR 125 Bros', 'NXR 160 Bros', 'XRE 190', 'XRE 300', 'PCX 150', 'PCX 160',
+    'ELITE 125', 'POP 100', 'POP 110i', 'Crosser 150', 'Fazer 150', 'Fazer 250', 'Factor 125', 'Factor 150'
+  ];
+  const ANOS = [
+    '2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'
+  ];
 
   return (
     <Card>
@@ -320,7 +319,7 @@ function HistoricoInteressesSection({
       <CardContent className="space-y-4">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="data_interesse">Data do Interesse</Label>
                 <Input
@@ -332,16 +331,39 @@ function HistoricoInteressesSection({
                 />
               </div>
               <div>
-                <Label htmlFor="modelo_moto">Modelo da Moto</Label>
-                <Input
-                  id="modelo_moto"
-                  value={formData.modelo_moto}
-                  onChange={(e) => setFormData({ ...formData, modelo_moto: e.target.value })}
-                  placeholder="Ex: Honda Biz 125"
-                />
+                <Label htmlFor="modelo">Modelo da Moto</Label>
+                <Select
+                  value={formData.modelo}
+                  onValueChange={value => setFormData({ ...formData, modelo: value })}
+                >
+                  <SelectTrigger id="modelo">
+                    <SelectValue placeholder="Selecione o modelo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MOTO_MODELOS.map((modelo) => (
+                      <SelectItem key={modelo} value={modelo}>{modelo}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="ano">Ano</Label>
+                <Select
+                  value={formData.ano}
+                  onValueChange={value => setFormData({ ...formData, ano: value })}
+                >
+                  <SelectTrigger id="ano">
+                    <SelectValue placeholder="Selecione o ano" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ANOS.map((ano) => (
+                      <SelectItem key={ano} value={ano}>{ano}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div>
                 <Label htmlFor="cor_preferida">Cor Preferida</Label>
                 <Input
@@ -351,6 +373,8 @@ function HistoricoInteressesSection({
                   placeholder="Ex: Vermelha"
                 />
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="valor_interesse">Valor de Interesse</Label>
                 <Input
@@ -486,7 +510,7 @@ function HistoricoFinanceiroSection({
       <CardContent className="space-y-4">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="data_tentativa">Data da Tentativa</Label>
                 <Input
@@ -509,7 +533,7 @@ function HistoricoFinanceiroSection({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="numero_parcelas">Número de Parcelas</Label>
                 <Input
@@ -682,7 +706,7 @@ function HistoricoProcessosSection({
       <CardContent className="space-y-4">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="tipo_processo">Tipo de Processo</Label>
                 <Input
@@ -702,7 +726,7 @@ function HistoricoProcessosSection({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="local_comarca">Local/Comarca</Label>
                 <Input

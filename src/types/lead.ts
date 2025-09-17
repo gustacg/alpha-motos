@@ -1,4 +1,4 @@
-export type LeadStatus = 'lead' | 'qualificado' | 'consultar' | 'agendamento' | 'nao_comparecimento' | 'contrato' | 'cliente' | 'distrato' | 'curioso' | 'descartado';
+export type LeadStatus = 'lead' | 'consultar' | 'qualificado' | 'agendado' | 'nao_compareceu' | 'contrato_feito' | 'venda_concluida' | 'distrato' | 'descartado';
 
 export interface Lead {
   id: string;
@@ -59,6 +59,5 @@ export interface LeadWithHistory extends Lead {
 export interface LeadFilters {
   search: string;
   scoringRange?: 'high' | 'medium' | 'low';
-  vendedora?: string;
   interestModel?: string;
 }

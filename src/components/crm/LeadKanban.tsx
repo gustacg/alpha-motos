@@ -17,14 +17,13 @@ interface LeadKanbanProps {
 
 const statusTitles: Record<LeadStatus, string> = {
   lead: 'Lead',
-  qualificado: 'Qualificado',
   consultar: 'Consultar',
-  agendamento: 'Agendamento',
-  nao_comparecimento: 'Não Comparecimento',
-  contrato: 'Contrato',
-  cliente: 'Cliente',
+  qualificado: 'Qualificado',
+  agendado: 'Agendado',
+  nao_compareceu: 'Não Compareceu',
+  contrato_feito: 'Contrato feito',
+  venda_concluida: 'Venda concluída',
   distrato: 'Distrato',
-  curioso: 'Curioso',
   descartado: 'Descartado'
 };
 

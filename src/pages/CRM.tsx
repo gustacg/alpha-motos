@@ -29,18 +29,13 @@ export default function CRM() {
 
   return (
     <div className="space-y-6 w-full min-w-0 overflow-hidden page-container">
-      {/* Header com filtros e botão adicionar - Responsivo */}
-      <div className="flex flex-col gap-4">
+      {/* Header com filtros e botão adicionar */}
+      <div className="flex justify-between items-center">
         <LeadFilters
           filters={filters}
           onFiltersChange={updateFilters}
-          addLeadButton={<AddLeadDialog onAddLead={addLead} />}
         />
-        
-        {/* Botão adicionar - separado no mobile (3ª linha conforme solicitado) */}
-        <div className="flex md:hidden w-full">
-          <AddLeadDialog onAddLead={addLead} />
-        </div>
+        <AddLeadDialog onAddLead={addLead} />
       </div>
 
       {/* Kanban - Container com scroll horizontal limitado */}

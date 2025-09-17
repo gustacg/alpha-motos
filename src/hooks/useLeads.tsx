@@ -55,14 +55,12 @@ export function useLeads() {
         (filters.scoringRange === 'medium' && lead.score >= 60 && lead.score < 80) ||
         (filters.scoringRange === 'low' && lead.score < 60);
 
-      const matchesVendedora = !filters.vendedora || lead.vendedora === filters.vendedora;
-
-      return matchesSearch && matchesScoring && matchesVendedora;
+      return matchesSearch && matchesScoring;
     });
   }, [leads, filters]);
 
   const leadsByStatus = useMemo(() => {
-    const statusOrder: LeadStatus[] = ['lead', 'qualificado', 'consultar', 'agendamento', 'nao_comparecimento', 'contrato', 'cliente', 'distrato', 'curioso', 'descartado'];
+    const statusOrder: LeadStatus[] = ['lead', 'consultar', 'qualificado', 'agendado', 'nao_compareceu', 'contrato_feito', 'venda_concluida', 'distrato', 'descartado'];
     
     const groupedByStatus = statusOrder.reduce((acc, status) => {
       acc[status] = filteredLeads.filter(lead => lead.tipo === status);
