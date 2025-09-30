@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  alpha-motos-crm:
+    image: docker.io/gustacg/alpha-motos-crm:latest
+    networks:
+      - network_swarm_public
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 60s
+      labels:
+        # Traefik enable
+        - traefik.enable=true
+        
+        # HTTPS Router (principal)
+        - traefik.http.routers.alphamotos-https.rule=Host(`crm.grupoalphamotos.com`)
+        - traefik.http.routers.alphamotos-https.entrypoints=websecure
+        - traefik.http.routers.alphamotos-https.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.alphamotos-https.service=alphamotos-svc
+        
+        # HTTP Router (redirecionamento)
+        - traefik.http.routers.alphamotos-http.rule=Host(`crm.grupoalphamotos.com`)
+        - traefik.http.routers.alphamotos-http.entrypoints=web
+        - traefik.http.routers.alphamotos-http.middlewares=redirect-to-https
+        - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+        - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
+        
+        # Service configuration
+        - traefik.http.services.alphamotos-svc.loadbalancer.server.port=80
+        - traefik.http.services.alphamotos-svc.loadbalancer.passHostHeader=true
+        
+        # Security headers middleware
+        - traefik.http.routers.alphamotos-https.middlewares=alphamotos-headers
+        - traefik.http.middlewares.alphamotos-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
+        - traefik.http.middlewares.alphamotos-headers.headers.customRequestHeaders.X-Real-IP=true
+        - traefik.http.middlewares.alphamotos-headers.headers.customRequestHeaders.X-Forwarded-For=true
+        
+        # Response headers for security
+        - traefik.http.middlewares.alphamotos-headers.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN
+        - traefik.http.middlewares.alphamotos-headers.headers.customResponseHeaders.X-XSS-Protection=1; mode=block
+        - traefik.http.middlewares.alphamotos-headers.headers.customResponseHeaders.X-Content-Type-Options=nosniff
+        - traefik.http.middlewares.alphamotos-headers.headers.customResponseHeaders.Referrer-Policy=no-referrer-when-downgrade
+
+networks:
+  network_swarm_public:
+    external: true
+    name: network_swarm_public

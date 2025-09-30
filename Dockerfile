@@ -23,7 +23,7 @@ RUN test -f dist/index.html || (echo "ERROR: dist/index.html not found after bui
 FROM nginx:alpine AS production
 
 # Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx-FIXED.conf /etc/nginx/conf.d/default.conf
 
 # Copy built files from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
